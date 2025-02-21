@@ -1,0 +1,53 @@
+@if (isLoading) {
+  <div class="spinner-container">
+    <div class="spinner"></div>
+  </div>
+} @else {
+  <main class="main">
+    <h1 class="page-title">Products</h1>
+    <div class="product-grid">
+      @for (product of products; track product?._id) {
+        <div class="product-card">
+          <img [src]="product?.image?.image" [alt]="product?.title" class="product-image">
+          <div class="product-info">
+            <h3 class="product-name">{{ product?.title }}</h3>
+            <div class="product-rating">
+              <span class="stars">★★★★☆</span>
+              <span class="review-count">(123)</span>
+            </div>
+            <p class="product-price">${{ product?.regular_price?.toFixed(2) }}</p>
+            <p class="prime-delivery">Prime FREE Delivery</p>
+            <p class="prime-delivery">by {{ product?.brand}}</p>
+          </div>
+          <button
+            class="add-to-cart-btn"
+            (click)="addToCart(product)"
+          >Add to Cart</button>
+        </div>
+      }
+    </div>
+
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1" class="pagination-btn">
+        ← Previous
+      </button>
+
+      <span class="pagination-info">
+        Page {{ currentPage }} of {{ totalPages }}
+      </span>
+
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="pagination-btn">
+        Next →
+      </button>
+    </div>
+
+    <div class="toast-container">
+      @for (toast of toasts; track toast.id) {
+        <div class="toast">
+          {{ toast.message }}
+        </div>
+      }
+    </div>
+
+  </main>
+}
